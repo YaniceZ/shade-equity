@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "If you use this software or its results, please cite it as below."
+title: "Shade on the way: open global data, LiDAR and older adults' sun exposure on walks to essential destinations in Vancouver"
+authors:
+  - family-names: Zeng
+    given-names: Yanice
+license: MIT
+repository-code: "https://github.com/YaniceZ/shade-equity"
+version: 0.1.0
+date-released: 2026-11-19
+keywords:
+  - urban heat
+  - pedestrian shade
+  - older adults
+  - LiDAR
+  - canopy height
+  - accessibility
+  - environmental justice

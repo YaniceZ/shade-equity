@@ -1,0 +1,323 @@
+{
+  "speed_older_mps": 0.9,
+  "peak_hour": 15.0,
+  "day": [
+    2021,
+    6,
+    28
+  ],
+  "population": {
+    "total": 717069.3344012755,
+    "age65": 131774.61166569503,
+    "cells": 20472
+  },
+  "lidar": {
+    "clinic": {
+      "sun_min_older_peak_65": 9.03342499120424,
+      "sun_min_older_peak_65_ci": [
+        8.204310793418658,
+        10.022688463813903
+      ],
+      "shade_share_peak_65": 0.446958901045491,
+      "shade_share_peak_all": 0.4504897983518844,
+      "gap_65_minus_all": -0.003530897306393388,
+      "near_10min_65": 0.30643080037691833,
+      "near_and_shaded_65": 0.13322895494551437,
+      "near_and_shaded_65_ci": [
+        0.1032608874020556,
+        0.16235434939863258
+      ],
+      "distance_access_but_sunny_65": 0.5652233561977482,
+      "sun_min_all_adult_speed": 5.932615017207715,
+      "sun_min_all_older_speed": 8.569332802633365,
+      "dist_65": 873.0171635820125,
+      "dist_all": 833.6377987855532
+    },
+    "community": {
+      "sun_min_older_peak_65": 7.940573996307481,
+      "sun_min_older_peak_65_ci": [
+        7.325875011271237,
+        8.62366230936344
+      ],
+      "shade_share_peak_65": 0.44544526943085483,
+      "shade_share_peak_all": 0.4430229767302731,
+      "gap_65_minus_all": 0.002422292700581752,
+      "near_10min_65": 0.3179434984511541,
+      "near_and_shaded_65": 0.1227228769511271,
+      "near_and_shaded_65_ci": [
+        0.09896519666590958,
+        0.1470921578020766
+      ],
+      "distance_access_but_sunny_65": 0.6140104215089617,
+      "sun_min_all_adult_speed": 5.39001661193802,
+      "sun_min_all_older_speed": 7.7855795505771415,
+      "dist_65": 776.634003839993,
+      "dist_all": 755.8973980425222
+    },
+    "grocery": {
+      "sun_min_older_peak_65": 7.414589132132025,
+      "sun_min_older_peak_65_ci": [
+        6.727448133552961,
+        8.181958222428596
+      ],
+      "shade_share_peak_65": 0.4494375384342515,
+      "shade_share_peak_all": 0.44845149650390154,
+      "gap_65_minus_all": 0.0009860419303499568,
+      "near_10min_65": 0.3915534234700677,
+      "near_and_shaded_65": 0.16822637213952144,
+      "near_and_shaded_65_ci": [
+        0.13505395145067814,
+        0.20151300816902215
+      ],
+      "distance_access_but_sunny_65": 0.5703616363543775,
+      "sun_min_all_adult_speed": 4.879953265748217,
+      "sun_min_all_older_speed": 7.048821383858535,
+      "dist_65": 723.337595560586,
+      "dist_all": 684.7096785774575
+    },
+    "park": {
+      "sun_min_older_peak_65": 3.2277470278910685,
+      "sun_min_older_peak_65_ci": [
+        3.01699666333731,
+        3.4381777722804614
+      ],
+      "shade_share_peak_65": 0.4487505639865325,
+      "shade_share_peak_all": 0.4487219330214112,
+      "gap_65_minus_all": 2.8630965121290153e-05,
+      "near_10min_65": 0.8513550648663109,
+      "near_and_shaded_65": 0.3134708090506534,
+      "near_and_shaded_65_ci": [
+        0.2821844806053884,
+        0.3435912613092119
+      ],
+      "distance_access_but_sunny_65": 0.631797798607238,
+      "sun_min_all_adult_speed": 2.255037792588629,
+      "sun_min_all_older_speed": 3.2572768115169093,
+      "dist_65": 317.3530477680204,
+      "dist_all": 319.6359366481314
+    },
+    "pharmacy": {
+      "sun_min_older_peak_65": 7.925237872776571,
+      "sun_min_older_peak_65_ci": [
+        7.25593668360864,
+        8.6997685556867
+      ],
+      "shade_share_peak_65": 0.44824493306306173,
+      "shade_share_peak_all": 0.44698718588808084,
+      "gap_65_minus_all": 0.0012577471749808944,
+      "near_10min_65": 0.35011750559956434,
+      "near_and_shaded_65": 0.1525780959067389,
+      "near_and_shaded_65_ci": [
+        0.11883846148368171,
+        0.18658447616671564
+      ],
+      "distance_access_but_sunny_65": 0.5642088913964639,
+      "sun_min_all_adult_speed": 5.213061690920328,
+      "sun_min_all_older_speed": 7.5299779979960295,
+      "dist_65": 772.2391643015782,
+      "dist_all": 729.3768973582353
+    },
+    "transit": {
+      "sun_min_older_peak_65": 2.370986347258307,
+      "sun_min_older_peak_65_ci": [
+        2.246196334462889,
+        2.504389936159663
+      ],
+      "shade_share_peak_65": 0.431642025972287,
+      "shade_share_peak_all": 0.4302078680546372,
+      "gap_65_minus_all": 0.0014341579176498365,
+      "near_10min_65": 0.9691471489943833,
+      "near_and_shaded_65": 0.373822111495668,
+      "near_and_shaded_65_ci": [
+        0.3379753598024645,
+        0.4114305248940787
+      ],
+      "distance_access_but_sunny_65": 0.6142772417134413,
+      "sun_min_all_adult_speed": 1.6234403946431206,
+      "sun_min_all_older_speed": 2.344969458928952,
+      "dist_65": 232.22380896126364,
+      "dist_all": 228.50831773463057
+    }
+  },
+  "global": {
+    "clinic": {
+      "sun_min_older_peak_65": 11.874723022344071,
+      "sun_min_older_peak_65_ci": [
+        10.843981203553199,
+        13.022138706216072
+      ],
+      "shade_share_peak_65": 0.2649720399692444,
+      "shade_share_peak_all": 0.265287401673317,
+      "gap_65_minus_all": -0.000315361704072592,
+      "near_10min_65": 0.30643080037691833,
+      "near_and_shaded_65": 0.03583877501248452,
+      "near_and_shaded_65_ci": [
+        0.025478832937468804,
+        0.04606553566938366
+      ],
+      "distance_access_but_sunny_65": 0.8830444753973757,
+      "sun_min_all_adult_speed": 7.842748888117729,
+      "sun_min_all_older_speed": 11.328415060614498,
+      "dist_65": 873.0171635820125,
+      "dist_all": 833.6377987855532
+    },
+    "community": {
+      "sun_min_older_peak_65": 10.35947944568931,
+      "sun_min_older_peak_65_ci": [
+        9.619324440809143,
+        11.188030253818171
+      ],
+      "shade_share_peak_65": 0.2729639409585715,
+      "shade_share_peak_all": 0.2689517184178821,
+      "gap_65_minus_all": 0.004012222540689392,
+      "near_10min_65": 0.3179434984511541,
+      "near_and_shaded_65": 0.030570686575043887,
+      "near_and_shaded_65_ci": [
+        0.02206520722222149,
+        0.04155691923040602
+      ],
+      "distance_access_but_sunny_65": 0.9038486815299965,
+      "sun_min_all_adult_speed": 7.025769058647647,
+      "sun_min_all_older_speed": 10.148333084713265,
+      "dist_65": 776.634003839993,
+      "dist_all": 755.8973980425222
+    },
+    "grocery": {
+      "sun_min_older_peak_65": 9.641361969106665,
+      "sun_min_older_peak_65_ci": [
+        8.805754019730102,
+        10.56002099003469
+      ],
+      "shade_share_peak_65": 0.27565762179598663,
+      "shade_share_peak_all": 0.27309454714447945,
+      "gap_65_minus_all": 0.00256307465150718,
+      "near_10min_65": 0.3915534234700677,
+      "near_and_shaded_65": 0.043507496750418116,
+      "near_and_shaded_65_ci": [
+        0.03206360630264491,
+        0.055358011562176464
+      ],
+      "distance_access_but_sunny_65": 0.8888849026913335,
+      "sun_min_all_adult_speed": 6.349142960130818,
+      "sun_min_all_older_speed": 9.170984275744514,
+      "dist_65": 723.337595560586,
+      "dist_all": 684.7096785774575
+    },
+    "park": {
+      "sun_min_older_peak_65": 4.272323856008006,
+      "sun_min_older_peak_65_ci": [
+        4.0090985337322,
+        4.581931869308285
+      ],
+      "shade_share_peak_65": 0.2731774486398317,
+      "shade_share_peak_all": 0.26961704359037225,
+      "gap_65_minus_all": 0.0035604050494594253,
+      "near_10min_65": 0.8513550648663109,
+      "near_and_shaded_65": 0.09938540719800622,
+      "near_and_shaded_65_ci": [
+        0.08321262603082122,
+        0.11708311863739035
+      ],
+      "distance_access_but_sunny_65": 0.8832620943958174,
+      "sun_min_all_adult_speed": 2.991003755739137,
+      "sun_min_all_older_speed": 4.320338758289864,
+      "dist_65": 317.3530477680204,
+      "dist_all": 319.6359366481314
+    },
+    "pharmacy": {
+      "sun_min_older_peak_65": 10.343170652167105,
+      "sun_min_older_peak_65_ci": [
+        9.515945883877132,
+        11.240222718912605
+      ],
+      "shade_share_peak_65": 0.27339315937124464,
+      "shade_share_peak_all": 0.27250241305411826,
+      "gap_65_minus_all": 0.0008907463171263785,
+      "near_10min_65": 0.35011750559956434,
+      "near_and_shaded_65": 0.04050081894870493,
+      "near_and_shaded_65_ci": [
+        0.029657232128821872,
+        0.051837163470095045
+      ],
+      "distance_access_but_sunny_65": 0.8843222109692899,
+      "sun_min_all_adult_speed": 6.788950171133588,
+      "sun_min_all_older_speed": 9.806261358304074,
+      "dist_65": 772.2391643015782,
+      "dist_all": 729.3768973582353
+    },
+    "transit": {
+      "sun_min_older_peak_65": 3.124840521628957,
+      "sun_min_older_peak_65_ci": [
+        2.988589434476048,
+        3.2673789739641723
+      ],
+      "shade_share_peak_65": 0.25863178153150973,
+      "shade_share_peak_all": 0.25489914449159906,
+      "gap_65_minus_all": 0.003732637039910669,
+      "near_10min_65": 0.9691471489943833,
+      "near_and_shaded_65": 0.12240418419168253,
+      "near_and_shaded_65_ci": [
+        0.10305896340126895,
+        0.14589829970782872
+      ],
+      "distance_access_but_sunny_65": 0.8736990720978824,
+      "sun_min_all_adult_speed": 2.1428518866654565,
+      "sun_min_all_older_speed": 3.0952305029612144,
+      "dist_65": 232.22380896126364,
+      "dist_all": 228.50831773463057
+    }
+  },
+  "neighbourhoods": {
+    "spearman_share65_vs_route_shade": -0.11575381140598533,
+    "spearman_route_shade_lidar_vs_global": 0.6510446075663467,
+    "spearman_sun_min_lidar_vs_global": 0.9265951439864484,
+    "least_shaded_lidar": [
+      "Sunset",
+      "Victoria-Fraserview",
+      "Renfrew-Collingwood",
+      "Hastings-Sunrise",
+      "Kensington-Cedar Cottage"
+    ],
+    "least_shaded_global": [
+      "Sunset",
+      "Victoria-Fraserview",
+      "Kensington-Cedar Cottage",
+      "Renfrew-Collingwood",
+      "Hastings-Sunrise"
+    ]
+  },
+  "cells": {
+    "n": 18324,
+    "spearman_share65_vs_route_shade": 0.03122345370312983,
+    "spearman_share65_vs_route_shade_global": 0.10532307748688609,
+    "cell_route_shade_lidar_vs_global": {
+      "n": 18324,
+      "ref_mean": 0.44548632797018217,
+      "est_mean": 0.27005693099510314,
+      "bias": -0.1754293969750791,
+      "mae": 0.17713046101453964,
+      "rmse": 0.19909789925712681,
+      "r2": -1.1847112612005262,
+      "pearson": 0.7034864813105688,
+      "spearman": 0.6983400824710819
+    }
+  },
+  "shade_seeking": {
+    "0.5": {
+      "detour_pct_65": 1.0866999628379004,
+      "sun_reduction_pct_65": 20.88548902080308
+    },
+    "1": {
+      "detour_pct_65": 2.3623410780525766,
+      "sun_reduction_pct_65": 24.018534547659222
+    },
+    "2": {
+      "detour_pct_65": 4.61091877960309,
+      "sun_reduction_pct_65": 26.867023516549704
+    },
+    "4": {
+      "detour_pct_65": 7.662334587940922,
+      "sun_reduction_pct_65": 28.841811840974284
+    }
+  }
+}

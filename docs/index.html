@@ -1,0 +1,172 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Shade on the Way</title>
+<meta name="description" content="Sidewalk shade and older adults' routes to essential destinations in Vancouver, measured with LiDAR and with open global data.">
+<link href="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.css" rel="stylesheet">
+<script src="https://unpkg.com/maplibre-gl@4.7.1/dist/maplibre-gl.js"></script>
+<style>
+  :root {
+    --bg: #fbfaf7; --ink: #1a1a19; --ink2: #52514e; --rule: #d9d7d0; --card: #ffffff;
+    --lidar: #1f5fa8; --global: #d1612b;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) { --bg: #161615; --ink: #ecebe7; --ink2: #b5b2aa; --rule: #3a3936; --card: #1f1f1d; }
+  }
+  :root[data-theme="dark"] { --bg: #161615; --ink: #ecebe7; --ink2: #b5b2aa; --rule: #3a3936; --card: #1f1f1d; }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font: 15px/1.55 -apple-system, "Segoe UI", Roboto, Arial, sans-serif; }
+  header, main { max-width: 1080px; margin: 0 auto; padding: 0 16px; }
+  header { padding-top: 32px; }
+  h1 { font-size: 28px; line-height: 1.2; margin: 0 0 8px; letter-spacing: -0.01em; }
+  .sub { color: var(--ink2); margin: 0 0 20px; max-width: 760px; }
+  .stats { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 12px; margin: 0 0 20px; }
+  .stat { background: var(--card); border: 1px solid var(--rule); border-radius: 8px; padding: 12px 14px; }
+  .stat b { display: block; font-size: 22px; line-height: 1.2; }
+  .stat span { color: var(--ink2); font-size: 13px; }
+  #map { height: 72vh; min-height: 420px; border: 1px solid var(--rule); border-radius: 8px; }
+  .controls { display: flex; flex-wrap: wrap; gap: 8px 16px; align-items: center; margin: 12px 0; font-size: 14px; }
+  .controls label { cursor: pointer; }
+  .seg { display: inline-flex; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; }
+  .seg button { background: var(--card); color: var(--ink); border: 0; padding: 6px 10px; font: inherit; cursor: pointer; }
+  .seg button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  .legend { display: flex; align-items: center; gap: 8px; font-size: 13px; color: var(--ink2); }
+  .ramp { width: 160px; height: 10px; border-radius: 2px; }
+  section { margin: 28px 0; max-width: 760px; }
+  section h2 { font-size: 18px; margin: 0 0 8px; }
+  figure { margin: 20px 0; }
+  figure img { width: 100%; border: 1px solid var(--rule); border-radius: 6px; background: #fff; }
+  figcaption { color: var(--ink2); font-size: 13px; }
+  footer { max-width: 1080px; margin: 40px auto; padding: 0 16px; color: var(--ink2); font-size: 13px; }
+  a { color: var(--lidar); }
+  .maplibregl-popup-content { color: #1a1a19; font-size: 13px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Shade on the way</h1>
+  <p class="sub">How much of an older resident's walk to the grocery store, pharmacy, clinic, bus stop, park or community centre is in direct sun? Vancouver on 28 June 2021, the peak of the heat dome, modelled with airborne LiDAR and with open global data.</p>
+  <div class="stats" id="stats"></div>
+</header>
+<main>
+  <div class="controls">
+    <span class="seg" role="group" aria-label="Layer">
+      <button data-layer="walk" aria-pressed="true">Sidewalk shade</button>
+      <button data-layer="cells" aria-pressed="false">Older adults' sun exposure</button>
+      <button data-layer="flow" aria-pressed="false">Where older adults walk</button>
+    </span>
+    <span class="seg" role="group" aria-label="Data source" id="srcseg">
+      <button data-src="l" aria-pressed="true">LiDAR</button>
+      <button data-src="g" aria-pressed="false">Open global data</button>
+    </span>
+    <span class="seg" role="group" aria-label="Time" id="timeseg">
+      <button data-time="day" aria-pressed="true">10:00–17:00</button>
+      <button data-time="peak" aria-pressed="false">15:00</button>
+    </span>
+    <span class="legend" id="legend"></span>
+  </div>
+  <div id="map" role="region" aria-label="Map of Vancouver"></div>
+
+  <section id="findings"></section>
+
+  <figure><img src="figures/fig2_validation.png" alt="Validation of open global data against LiDAR"><figcaption>Figure 2. Open global data against LiDAR: building heights, tree canopy, sidewalk shade, daily course, error sources and neighbourhood ranks.</figcaption></figure>
+  <figure><img src="figures/fig3_older_adults.png" alt="Older adults' sun exposure on routes"><figcaption>Figure 3. Minutes in direct sun on the shortest walk to six kinds of essential destination, residents aged 65 and over.</figcaption></figure>
+  <figure><img src="figures/fig4_interventions.png" alt="Shade-seeking routes and street-tree scenarios"><figcaption>Figure 4. Shade-seeking routes and simulated street-tree planting.</figcaption></figure>
+
+  <section>
+    <h2>Methods in brief</h2>
+    <p>Shade was cast from buildings and trees every 30 minutes from 10:00 to 17:00 on a 1 m grid by ray marching towards the sun, with 10% of direct sun passing through tree crowns. Two obstacle models share the LiDAR terrain: (1) the 2016 NRCan HRDEM LiDAR surface split into buildings and trees with building footprints, and (2) GlobalBuildingAtlas building heights with the Meta/WRI 1 m canopy height map. Shade was sampled every 2 m on both sidewalks of every street in the OpenStreetMap walk network. Residents (WorldPop 2025, 100 m) were routed to the nearest destination of each type on the shortest path; older adults walk at 0.9 m/s.</p>
+    <p>Shade is not thermal comfort: the model counts only blocked direct sun, not air temperature, humidity or radiation from hot surfaces. The street-tree results are simulations, not predictions.</p>
+  </section>
+</main>
+<footer>
+  Code, data sources and manuscript: <a href="https://github.com/YaniceZ/shade-equity">github.com/YaniceZ/shade-equity</a>.
+  Data: NRCan HRDEM (OGL-Canada), GlobalBuildingAtlas (CC BY-NC 4.0), Meta/WRI canopy height (CC BY 4.0), WorldPop (CC BY 4.0), © OpenStreetMap contributors (ODbL), Overture Maps, City of Vancouver Open Data.
+</footer>
+<script>
+const STATS = [
+  ["45% vs 28%", "share of walkway shaded 10:00–17:00, LiDAR vs open global data"],
+  ["−17.9 pts", "error from trees; buildings add only +1.0"],
+  ["56–63%", "of older adults with a destination within 10 min walk face a mostly sunny route at 15:00"],
+  ["7×", "more sun exposure removed per km of street trees planted where older adults walk than on the sunniest streets"]
+];
+const FINDINGS = `<h2>What we found</h2>
+<p><b>Open global data miss most of the shade.</b> With airborne LiDAR, 45.2% of Vancouver's 4,044 km of walkways were shaded between 10:00 and 17:00 on the hottest day of the 2021 heat dome. Building heights from GlobalBuildingAtlas and the Meta/WRI 1 m canopy map gave 28.5%. Swapping one layer at a time shows that trees cause almost all of the gap (−17.9 percentage points); buildings add +1.0. The global canopy map finds 47% of the green LiDAR canopy.</p>
+<p><b>Rankings survive, thresholds do not.</b> Neighbourhood rankings agree well (Spearman ρ = 0.84 across 22 local areas; the five least-shaded areas are the same), but any absolute threshold is badly biased: the share of older adults whose nearest grocery store is within a 10-minute walk on a mostly shaded route is 16.8% with LiDAR and 4.4% with global data.</p>
+<p><b>For older adults, distance and pace matter more than shade inequality.</b> Residents aged 65 and over (2021 Census, by dissemination area) do not have less shaded routes than other residents. They spend more time in the sun because they walk slower (+44% at 0.9 versus 1.3 m/s) and live slightly farther from clinics, pharmacies and grocery stores (+5%).</p>
+<p><b>Where trees go matters.</b> In a simulation, 50 km of new street trees placed on the sunny walkways that older adults use most cut their sun exposure by 10.6%; the same length on the sunniest streets cut it by 1.5%. Choosing shadier routes cuts sun exposure by 21% for 1% extra distance.</p>
+<p><b>A data warning.</b> WorldPop's 2025 age layers give every 100 m cell in Vancouver the same 65+ share (18.3%), so they cannot show where older adults live within the city. Census counts by dissemination area were used instead.</p>`;
+
+const statsEl = document.getElementById('stats');
+STATS.forEach(s => { const d = document.createElement('div'); d.className = 'stat'; d.innerHTML = `<b>${s[0]}</b><span>${s[1]}</span>`; statsEl.appendChild(d); });
+document.getElementById('findings').innerHTML = FINDINGS;
+
+const SHADE = ['interpolate', ['linear'], ['get', 'X'], 0, '#f6c445', 25, '#f0e3b2', 50, '#9cc2d9', 75, '#2f6ea5', 100, '#12325c'];
+const SUN = ['interpolate', ['linear'], ['get', 'X'], 0, '#fff6dc', 3, '#f6c445', 6, '#e0712c', 10, '#a8321b'];
+const state = { layer: 'walk', src: 'l', time: 'day' };
+
+const map = new maplibregl.Map({
+  container: 'map',
+  style: { version: 8, sources: { base: { type: 'raster', tiles: ['https://tile.openstreetmap.org/{z}/{x}/{y}.png'], tileSize: 256, maxzoom: 19,
+    attribution: '© OpenStreetMap contributors' } }, layers: [{ id: 'base', type: 'raster', source: 'base', paint: { 'raster-saturation': -0.85, 'raster-opacity': 0.55 } }] },
+  center: [-123.115, 49.255], zoom: 12, maxZoom: 18
+});
+map.addControl(new maplibregl.NavigationControl({ showCompass: false }));
+new ResizeObserver(() => map.resize()).observe(document.getElementById('map'));
+
+function prop() {
+  if (state.layer === 'walk') return (state.time === 'day' ? 's' : 'p') + state.src;
+  if (state.layer === 'cells') return state.src === 'l' ? 'sm' : 'smg';
+  return 'f';
+}
+function expr(base, key) { return JSON.parse(JSON.stringify(base).replaceAll('"X"', `"${key}"`)); }
+
+function render() {
+  const k = prop();
+  ['walk', 'flow'].forEach(id => map.getLayer(id) && map.setLayoutProperty(id, 'visibility', state.layer === id ? 'visible' : 'none'));
+  map.setLayoutProperty('cells', 'visibility', state.layer === 'cells' ? 'visible' : 'none');
+  if (state.layer === 'walk') map.setPaintProperty('walk', 'line-color', expr(SHADE, k));
+  if (state.layer === 'cells') map.setPaintProperty('cells', 'fill-color', expr(SUN, k));
+  document.getElementById('timeseg').style.display = state.layer === 'walk' ? '' : 'none';
+  document.getElementById('srcseg').style.display = state.layer === 'flow' ? 'none' : '';
+  const lg = document.getElementById('legend');
+  if (state.layer === 'walk') lg.innerHTML = 'Sun <span class="ramp" style="background:linear-gradient(90deg,#f6c445,#f0e3b2,#9cc2d9,#2f6ea5,#12325c)"></span> Shade';
+  else if (state.layer === 'cells') lg.innerHTML = '0 <span class="ramp" style="background:linear-gradient(90deg,#fff6dc,#f6c445,#e0712c,#a8321b)"></span> 10+ min in sun per trip (65+, 15:00)';
+  else lg.innerHTML = 'Line width and darkness: older adults routed over the street';
+}
+
+map.on('load', async () => {
+  map.addSource('walk', { type: 'geojson', data: 'data/walkways.geojson' });
+  map.addSource('cells', { type: 'geojson', data: 'data/cells.geojson' });
+  map.addSource('nb', { type: 'geojson', data: 'data/neighbourhoods.geojson' });
+  map.addLayer({ id: 'cells', type: 'fill', source: 'cells', filter: ['>=', ['get', 'p65'], 1], paint: { 'fill-color': expr(SUN, 'sm'), 'fill-opacity': 0.85 }, layout: { visibility: 'none' } });
+  map.addLayer({ id: 'walk', type: 'line', source: 'walk', paint: { 'line-color': expr(SHADE, 'sl'), 'line-width': ['interpolate', ['linear'], ['zoom'], 11, 0.6, 16, 3] } });
+  map.addLayer({ id: 'flow', type: 'line', source: 'walk', filter: ['>', ['get', 'f'], 20], layout: { visibility: 'none' },
+    paint: { 'line-color': ['interpolate', ['linear'], ['ln', ['+', 1, ['get', 'f']]], 3, '#d8d6cf', 6, '#7a7873', 9, '#1a1a19'],
+             'line-width': ['interpolate', ['linear'], ['ln', ['+', 1, ['get', 'f']]], 3, 0.4, 9, 4] } });
+  map.addLayer({ id: 'nb', type: 'line', source: 'nb', paint: { 'line-color': '#52514e', 'line-width': 0.8, 'line-dasharray': [2, 2] } });
+  render();
+  map.on('click', 'cells', e => {
+    const p = e.features[0].properties;
+    new maplibregl.Popup().setLngLat(e.lngLat).setHTML(`<b>${(+p.p65).toFixed(0)}</b> residents 65+<br>Route shade at 15:00: ${p.sh}% (LiDAR), ${p.shg}% (global)<br>Minutes in sun per trip: ${p.sm} (LiDAR), ${p.smg} (global)`).addTo(map);
+  });
+  map.on('click', 'walk', e => {
+    const p = e.features[0].properties;
+    new maplibregl.Popup().setLngLat(e.lngLat).setHTML(`Shade 10:00–17:00: ${p.sl}% LiDAR, ${p.sg}% global<br>Shade at 15:00: ${p.pl}% LiDAR, ${p.pg}% global`).addTo(map);
+  });
+  map.on('click', 'nb', () => {});
+});
+
+document.querySelectorAll('.seg button').forEach(b => b.addEventListener('click', () => {
+  const grp = b.parentElement;
+  grp.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b));
+  if (b.dataset.layer) state.layer = b.dataset.layer;
+  if (b.dataset.src) state.src = b.dataset.src;
+  if (b.dataset.time) state.time = b.dataset.time;
+  render();
+}));
+</script>
+</body>
+</html>
