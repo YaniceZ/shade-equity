@@ -1,0 +1,44 @@
+{
+  "by_class": [
+    {
+      "class_2016": "green canopy",
+      "cells": 32118411,
+      "share_of_tall": 0.8737,
+      "in_city_footprint_2015": 0.0298,
+      "under_public_tree_crown": 0.241,
+      "neither": 0.7294
+    },
+    {
+      "class_2016": "non-green thin",
+      "cells": 415974,
+      "share_of_tall": 0.0113,
+      "in_city_footprint_2015": 0.1774,
+      "under_public_tree_crown": 0.0338,
+      "neither": 0.7891
+    },
+    {
+      "class_2016": "non-green smooth",
+      "cells": 1085379,
+      "share_of_tall": 0.0295,
+      "in_city_footprint_2015": 0.2889,
+      "under_public_tree_crown": 0.0489,
+      "neither": 0.6629
+    },
+    {
+      "class_2016": "non-green rough",
+      "cells": 3142941,
+      "share_of_tall": 0.0855,
+      "in_city_footprint_2015": 0.1371,
+      "under_public_tree_crown": 0.1262,
+      "neither": 0.738
+    }
+  ],
+  "non_green_all": {
+    "in_city_footprint_2015": 0.1762,
+    "under_public_tree_crown": 0.0998,
+    "neither": 0.725
+  },
+  "public_trees": 184073,
+  "city_footprints_2015": 154124,
+  "note": "Public inventory excludes private trees; compare rates between classes."
+}

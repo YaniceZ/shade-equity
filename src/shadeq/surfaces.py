@@ -89,7 +89,8 @@ def clean_layers(city: C.City) -> None:
     Outside footprints, LiDAR objects in 10 m cells with NDVI < 0.3 are (i) thin or isolated (fewer than 6 connected
     cells or under 30% tall cover in a 5 x 5 window: wires, poles; removed), (ii) smooth (3 x 3 height s.d. < 0.5 m and
     at least 10 connected cells: sheds, garages and other structures missing from footprints; made opaque), or
-    (iii) rough (tree crowns whose 10 m pixel also covers pavement; kept as trees).
+    (iii) rough (tree crowns whose 10 m pixel also covers pavement; kept as trees). The class of each
+    non-green cell (1 thin, 2 smooth, 3 rough) is saved to ``nongreen_classes.npy``.
     """
     from scipy import ndimage
 
@@ -109,6 +110,8 @@ def clean_layers(city: C.City) -> None:
     comp = np.bincount(lab.ravel())[lab]
     thin = ng & ((dens < 0.3) | (comp < 6))
     smooth = ng & ~thin & (sd < 0.5) & (comp >= 10)
+    rough = ng & ~thin & ~smooth
+    np.save(d / "nongreen_classes.npy", (thin * 1 + smooth * 2 + rough * 3).astype(np.uint8))
     g = D.grid(city)
     D.save_raster(d / "ref_bld_clean.tif", np.where(smooth, veg, bld).astype(np.float32), g)
     D.save_raster(d / "ref_veg_clean.tif", np.where(thin | smooth, 0, veg).astype(np.float32), g)

@@ -12,7 +12,7 @@ from . import config as C
 from . import data as D
 from . import network, surfaces
 
-STEPS = ["fetch", "surfaces", "shade", "validate", "routes", "scenario", "sensitivity", "figures", "website"]
+STEPS = ["fetch", "surfaces", "shade", "validate", "citycheck", "routes", "scenario", "sensitivity", "figures", "website"]
 
 
 def step_fetch(city):
@@ -77,10 +77,23 @@ def step_website(city):
     website.export(city)
 
 
+def step_citycheck(city):
+    from . import citycheck
+
+    citycheck.run(city)
+
+
+def step_lidar2022(city):
+    """Optional: needs 2022 City of Vancouver tiles downloaded by hand into data/raw/lidar2022/."""
+    from . import lidar2022
+
+    lidar2022.run(city)
+
+
 def main(argv=None):
     p = argparse.ArgumentParser(prog="shadeq")
     p.add_argument("--city", default="vancouver", choices=sorted(C.CITIES))
-    p.add_argument("step", choices=STEPS + ["all"])
+    p.add_argument("step", choices=STEPS + ["lidar2022", "all"])
     a = p.parse_args(argv)
     city = C.CITIES[a.city]
     for s in STEPS if a.step == "all" else [a.step]:

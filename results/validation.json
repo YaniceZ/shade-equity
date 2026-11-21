@@ -75,12 +75,12 @@
       "spearman": 0.6644819379893221
     },
     "green": {
-      "lidar_cover": 0.19947633333333334,
-      "share_of_lidar_tall_objects": 0.5345855822537622,
-      "recall": 0.46779985595617857,
-      "recall_ge3m": 0.4835182382550038,
-      "recall_ge5m": 0.545342861784782,
-      "recall_ge8m": 0.6296761688129043
+      "lidar_cover": 0.31740366666666664,
+      "share_of_lidar_tall_objects": 0.8506243378302809,
+      "recall": 0.4475667682898013,
+      "recall_ge3m": 0.4657656856376313,
+      "recall_ge5m": 0.5361347352478593,
+      "recall_ge8m": 0.6322785114447165
     }
   },
   "network": {

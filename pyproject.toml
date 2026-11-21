@@ -29,7 +29,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "ruff>=0.5"]
-data = ["pyrosm>=0.29", "planetary-computer>=1.0", "pystac-client>=0.8"]
+data = ["pyrosm>=0.29", "planetary-computer>=1.0", "pystac-client>=0.8", "laspy[lazrs]>=2.5"]
 
 [project.scripts]
 shadeq = "shadeq.cli:main"

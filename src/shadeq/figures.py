@@ -227,7 +227,7 @@ def fig2(city):
     ax.set_xticks([0, 1, 2], ["LiDAR\nall objects", "LiDAR\ngreen only", "Meta/WRI"])
     ax.set_ylabel("Canopy ≥2.5–3 m outside buildings")
     ax.yaxis.set_major_formatter(mpl.ticker.PercentFormatter(1, decimals=0))
-    ax.set_ylim(0, 0.45)
+    ax.set_ylim(0, 0.55)
     ax.text(0.98, 0.98, f"Meta finds {cv['green']['recall']:.0%} of\ngreen LiDAR canopy\n({cv['green']['recall_ge8m']:.0%} of crowns ≥8 m)",
             transform=ax.transAxes, ha="right", va="top", fontsize=6)
     panel(ax, "b")

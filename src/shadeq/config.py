@@ -51,7 +51,7 @@ VANCOUVER = City(
     gba_tile="w125_n50_w120_n45",
     gba_region="northamerica",
     neighbourhoods_url="https://opendata.vancouver.ca/api/explore/v2.1/catalog/datasets/local-area-boundary/exports/geojson",
-    extra={"s2_item": "S2B_MSIL2A_20180728T191909_R099_T10UDV_20201011T211249"},
+    extra={"s2_item": "S2B_MSIL2A_20180715T190909_R056_T10UDV_20201011T161721"},
 )
 
 CITIES = {c.key: c for c in [VANCOUVER]}
