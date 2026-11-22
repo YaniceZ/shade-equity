@@ -1,0 +1,40 @@
+{
+  "tiles": [
+    "489000_5456000",
+    "490000_5449000",
+    "491000_5458000",
+    "493000_5459000"
+  ],
+  "share_by_2016_class": {
+    "green canopy": {
+      "building": 0.035,
+      "nothing tall": 0.12,
+      "unclassified": 0.108,
+      "vegetation": 0.737
+    },
+    "non-green rough": {
+      "building": 0.168,
+      "nothing tall": 0.313,
+      "unclassified": 0.336,
+      "vegetation": 0.183
+    },
+    "non-green smooth": {
+      "building": 0.048,
+      "nothing tall": 0.383,
+      "unclassified": 0.517,
+      "vegetation": 0.052
+    },
+    "non-green thin": {
+      "building": 0.234,
+      "nothing tall": 0.424,
+      "unclassified": 0.274,
+      "vegetation": 0.068
+    }
+  },
+  "non_green_all": {
+    "building": 0.136,
+    "nothing tall": 0.336,
+    "unclassified": 0.386,
+    "vegetation": 0.142
+  }
+}

@@ -2,13 +2,12 @@
 
 The 2022 tiles sit behind a browser check, so they are downloaded by hand into data/raw/lidar2022/
 (one 1 km zip per tile, named like 491000_5458000.zip). For each 1 m cell with a tall non-building
-object in 2016, the class of the highest 2022 point above 2.5 m is recorded and cross-tabulated
+object in 2016, the class of the highest 2022 point at least 2.5 m above the 2022 ground is recorded and cross-tabulated
 against the 2016 categories (green canopy, and non-green thin / smooth / rough).
 """
 
 from __future__ import annotations
 
-import io
 import json
 import zipfile
 
@@ -27,35 +26,55 @@ ASPRS = {1: "unclassified", 2: "ground", 3: "vegetation", 4: "vegetation", 5: "v
 CATS_2016 = {0: "green canopy", 1: "non-green thin", 2: "non-green smooth", 3: "non-green rough"}
 
 
-def _points(zpath):
+def _points(zpath, chunk=5_000_000):
+    """Stream (x, y, z, class) arrays from the LAS/LAZ files in a tile zip without unpacking it."""
     import laspy  # optional dependency (extra "data")
 
     with zipfile.ZipFile(zpath) as z:
         for name in z.namelist():
             if name.lower().endswith((".las", ".laz")):
-                with z.open(name) as f:
-                    las = laspy.read(io.BytesIO(f.read()))
-                yield np.asarray(las.x), np.asarray(las.y), np.asarray(las.z), np.asarray(las.classification)
+                with z.open(name) as f, laspy.open(f) as r:
+                    for pts in r.chunk_iterator(chunk):
+                        yield np.asarray(pts.x), np.asarray(pts.y), np.asarray(pts.z), np.asarray(pts.classification)
 
 
-def tile_classes(zpath, e0, n0, ground):
-    """1000 x 1000 array of the ASPRS class of the highest point >= MIN_TREE above 2016 ground (0 = none)."""
-    top = np.full((1000, 1000), -np.inf, np.float32)
+def _keep_extreme(grid, idx, vals, highest):
+    """Write vals into grid.ravel()[idx], keeping the highest (or lowest) value per cell."""
+    order = np.argsort(vals if highest else -vals)  # with repeated indices the last write wins
+    idx, vals = idx[order], vals[order]
+    flat = grid.ravel()
+    better = vals > flat[idx] if highest else vals < flat[idx]
+    flat[idx[better]] = vals[better]
+    return idx[better], order[better]
+
+
+def tile_classes(zpath, e0, n0):
+    """1000 x 1000 array of the ASPRS class of the highest point at least MIN_TREE above ground (0 = none).
+
+    Heights are taken from the tile's own ground points (class 2), so the 2022 vertical datum does not matter.
+    Cells without ground points take the nearest ground value.
+    """
+    from scipy import ndimage
+
+    ground = np.full((1000, 1000), np.inf, np.float64)
+    top = np.full((1000, 1000), -np.inf, np.float64)
     cls = np.zeros((1000, 1000), np.uint8)
     for x, y, z, c in _points(zpath):
         col = np.floor(x - e0).astype(np.int64)
         row = np.floor(n0 + 1000 - y).astype(np.int64)
-        ok = (col >= 0) & (col < 1000) & (row >= 0) & (row < 1000) & ~np.isin(c, [2, 7, 9, 18])
-        col, row, z, c = col[ok], row[ok], z[ok], c[ok]
-        h = z - ground[row, col]
-        keep = h >= C.MIN_TREE
-        col, row, h, c = col[keep], row[keep], h[keep].astype(np.float32), c[keep]
-        order = np.argsort(h)  # later writes win, so the highest point per cell is kept
-        idx = row[order] * 1000 + col[order]
-        flat_top, flat_cls = top.ravel(), cls.ravel()
-        better = h[order] > flat_top[idx]
-        flat_top[idx[better]] = h[order][better]
-        flat_cls[idx[better]] = c[order][better]
+        ok = (col >= 0) & (col < 1000) & (row >= 0) & (row < 1000) & ~np.isin(c, [7, 9, 18])
+        idx, z, c = (row * 1000 + col)[ok], z[ok], c[ok]
+        g = c == 2
+        _keep_extreme(ground, idx[g], z[g], highest=False)
+        cells, order = _keep_extreme(top, idx[~g], z[~g], highest=True)
+        cls.ravel()[cells] = c[~g][order]
+    if np.isinf(ground).all():
+        return np.zeros((1000, 1000), np.uint8)
+    missing = np.isinf(ground)
+    if missing.any():
+        near = ndimage.distance_transform_edt(missing, return_distances=False, return_indices=True)
+        ground = ground[tuple(near)]
+    cls[(top - ground) < C.MIN_TREE] = 0
     return cls
 
 
@@ -79,7 +98,7 @@ def run(city=C.VANCOUVER, tiles=TILES):
         tall = L["ref_veg"][win] > 0
         cat = np.where(nongreen[win] > 0, nongreen[win], np.where(tall & (ndvi[win] >= 0.3), 0, 255))
         cat[~tall] = 255
-        new = tile_classes(zpath, e0, n0, L["ground"][win])
+        new = tile_classes(zpath, e0, n0)
         for k, label in CATS_2016.items():
             m = cat == k
             if not m.any():

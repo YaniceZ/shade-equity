@@ -248,7 +248,7 @@ def fig2(city):
         hrs = sorted(float(k) for k in di[s])
         ax.plot(hrs, [di[s][f"{h:g}"] for h in hrs], color=col, ls=ls, lw=1, label=lab)
     band = {}
-    for ref, tag in (("lidar_green", "_green"), ("lidar_clean", "_clean")):
+    for ref, tag in (("lidar_green", "_green"),):
         f = D.city_dir(city) / f"edge_sun{tag}.parquet"
         if f.exists():
             es = pd.read_parquet(f)
@@ -257,9 +257,7 @@ def fig2(city):
     if "lidar_green" in band:
         hrs = sorted(float(k) for k in di["lidar"])
         ax.fill_between(hrs, band["lidar_green"].reindex(hrs), [di["lidar"][f"{h:g}"] for h in hrs], color=LIDAR, alpha=0.12, lw=0,
-                        label="LiDAR reference range")
-    if "lidar_clean" in band:
-        ax.plot(band["lidar_clean"].index, band["lidar_clean"].to_numpy(), color=LIDAR, ls=":", lw=1, label="LiDAR, cleaned")
+                        label="LiDAR, green canopy only to all objects")
     ax.set_xlabel("Local time, 28 June 2021")
     ax.set_ylabel("Shaded share of walkways")
     ax.set_xticks([10, 12, 14, 16], ["10:00", "12:00", "14:00", "16:00"])

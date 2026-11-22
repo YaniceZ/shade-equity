@@ -1,0 +1,65 @@
+tile,class_2016,class_2022,cells
+491000_5458000,green canopy,vegetation,74489
+491000_5458000,green canopy,nothing tall,13291
+491000_5458000,green canopy,unclassified,9027
+491000_5458000,green canopy,building,5529
+491000_5458000,non-green thin,nothing tall,2137
+491000_5458000,non-green thin,unclassified,1395
+491000_5458000,non-green thin,building,694
+491000_5458000,non-green thin,vegetation,261
+491000_5458000,non-green smooth,unclassified,3346
+491000_5458000,non-green smooth,nothing tall,2876
+491000_5458000,non-green smooth,building,2775
+491000_5458000,non-green smooth,vegetation,2577
+491000_5458000,non-green rough,building,33140
+491000_5458000,non-green rough,vegetation,28307
+491000_5458000,non-green rough,nothing tall,27411
+491000_5458000,non-green rough,unclassified,23013
+493000_5459000,green canopy,vegetation,4709
+493000_5459000,green canopy,nothing tall,1294
+493000_5459000,green canopy,unclassified,650
+493000_5459000,green canopy,building,219
+493000_5459000,non-green thin,nothing tall,707
+493000_5459000,non-green thin,unclassified,349
+493000_5459000,non-green thin,building,203
+493000_5459000,non-green thin,vegetation,29
+493000_5459000,non-green smooth,nothing tall,30244
+493000_5459000,non-green smooth,unclassified,18350
+493000_5459000,non-green smooth,building,256
+493000_5459000,non-green smooth,vegetation,215
+493000_5459000,non-green rough,nothing tall,33080
+493000_5459000,non-green rough,unclassified,31061
+493000_5459000,non-green rough,vegetation,2167
+493000_5459000,non-green rough,building,1257
+490000_5449000,green canopy,unclassified,25328
+490000_5449000,green canopy,vegetation,7013
+490000_5449000,green canopy,nothing tall,4050
+490000_5449000,green canopy,building,257
+490000_5449000,non-green thin,unclassified,807
+490000_5449000,non-green thin,nothing tall,758
+490000_5449000,non-green thin,building,305
+490000_5449000,non-green thin,vegetation,92
+490000_5449000,non-green smooth,unclassified,34052
+490000_5449000,non-green smooth,nothing tall,5904
+490000_5449000,non-green smooth,building,1086
+490000_5449000,non-green smooth,vegetation,239
+490000_5449000,non-green rough,unclassified,28421
+490000_5449000,non-green rough,nothing tall,11569
+490000_5449000,non-green rough,building,1909
+490000_5449000,non-green rough,vegetation,1427
+489000_5456000,green canopy,vegetation,221344
+489000_5456000,green canopy,nothing tall,31367
+489000_5456000,green canopy,unclassified,9984
+489000_5456000,green canopy,building,8618
+489000_5456000,non-green thin,building,1707
+489000_5456000,non-green thin,nothing tall,1678
+489000_5456000,non-green thin,unclassified,857
+489000_5456000,non-green thin,vegetation,466
+489000_5456000,non-green smooth,nothing tall,3124
+489000_5456000,non-green smooth,vegetation,2710
+489000_5456000,non-green smooth,unclassified,1217
+489000_5456000,non-green smooth,building,1131
+489000_5456000,non-green rough,vegetation,16845
+489000_5456000,non-green rough,nothing tall,11353
+489000_5456000,non-green rough,building,8555
+489000_5456000,non-green rough,unclassified,7219
