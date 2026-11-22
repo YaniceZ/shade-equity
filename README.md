@@ -4,7 +4,7 @@
 
 How much of an older resident's walk to a grocery store, pharmacy, clinic, bus stop, park or community centre is in direct sun, and can open global data answer that question in cities without LiDAR? This repository models walkway shade in Vancouver on 28 June 2021, the peak of the Pacific Northwest heat dome, twice: once with airborne LiDAR and once with open global datasets, and routes every resident to the nearest essential destination.
 
-**Manuscript:** [paper/manuscript.md](paper/manuscript.md) (draft, not peer reviewed) · **Figures:** [docs/figures](docs/figures) (vector PDF and PNG) · **Interactive map:** [docs/index.html](docs/index.html)
+**Manuscript:** [paper/manuscript.md](paper/manuscript.md) (draft, not peer reviewed) · **Figures:** [docs/figures](docs/figures) (vector PDF and PNG) · **Interactive map:** [yanicez.github.io/shade-equity](https://yanicez.github.io/shade-equity/)
 
 ## Summary
 
